@@ -7,16 +7,15 @@ class User < ApplicationRecord
   has_many :products
   has_many :purchase_histories
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email,           presence: true, format: { with: VALID_EMAIL_REGEX }
+  PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]{6,}+\z/i.freeze
+  validates_format_of :password, with: PASSWORD_REGEX
 
-  VALID_PASSWORD_REGEX = /\A[a-z0-9]+\z/i
-  validates :password,         format: { with: VALID_PASSWORD_REGEX }
-
-  validates :nickname,         presence: true
-  validates :family_name,      presence: true, format: {with: /\A[ぁ-んァ-ン一-龥]/ }
-  validates :first_name,       presence: true, format: {with: /\A[ぁ-んァ-ン一-龥]/ }
-  validates :family_name_kana, presence: true, format: {with: /\A[ァ-ヶー－]+\z/ }
-  validates :first_name_kana,  presence: true, format: {with: /\A[ァ-ヶー－]+\z/ }
-  validates :date_of_birth,    presence: true
+  with_options presence: true do
+   validates :nickname
+   validates :family_name,      format: {with: /\A[ぁ-んァ-ヶ一-龥々]+\z/ }
+   validates :first_name,       format: {with: /\A[ぁ-んァ-ヶ一-龥々]+\z/ }
+   validates :family_name_kana, format: {with: /\A[ァ-ヶー－]+\z/ }
+   validates :first_name_kana,  format: {with: /\A[ァ-ヶー－]+\z/ }
+   validates :date_of_birth
+  end
 end
