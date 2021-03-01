@@ -12,10 +12,18 @@ class User < ApplicationRecord
 
   with_options presence: true do
    validates :nickname
-   validates :family_name,      format: {with: /\A[ぁ-んァ-ヶ一-龥々]+\z/ }
-   validates :first_name,       format: {with: /\A[ぁ-んァ-ヶ一-龥々]+\z/ }
-   validates :family_name_kana, format: {with: /\A[ァ-ヶー－]+\z/ }
-   validates :first_name_kana,  format: {with: /\A[ァ-ヶー－]+\z/ }
    validates :date_of_birth
+  end
+
+   # 全角のひらがなor漢字を使用していないか検証
+  with_options presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々]+\z/ } do
+    validates :family_name
+    validates :first_name
+  end
+
+  # 全角のカタカナを使用していないか検証
+  with_options presence: true, format: { with: /\A[ァ-ヶー－]+\z/ }do
+    validates :family_name_kana
+    validates :first_name_kana
   end
 end
