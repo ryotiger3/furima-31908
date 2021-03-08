@@ -5,7 +5,7 @@ class Product < ApplicationRecord
    belongs_to :shipping_charged
    belongs_to :shipping_day
    belongs_to :user
-   has_one :purchase_history
+   # has_one :purchase_history
    has_one_attached :image
 
  with_options presence: true do
