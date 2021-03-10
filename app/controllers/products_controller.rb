@@ -1,4 +1,9 @@
 class ProductsController < ApplicationController
+  def index
+    @products = Product.all
+    @products = @products.order("id asc")
+  end
+
   def new
     @product = Product.new
   end
