@@ -3,8 +3,9 @@ class Product < ApplicationRecord
    belongs_to :category
    belongs_to :condition
    belongs_to :shipping_charged
-   belongs_to :shipping_day
+   belongs_to :shipping_days
    belongs_to :user
+   belongs_to :prefecture
    # has_one :purchase_history
    has_one_attached :image
 
