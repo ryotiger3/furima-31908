@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
     before do
-      @order = FactoryBot.build(:order)
+      @user = FactoryBot.build(:user)
+      @product = FactoryBot.build(:product)
+      @order = FactoryBot.build(:order, user_id: @user.id, product_id: @product.id)
     end
 
     describe '商品購入機能' do
@@ -18,6 +20,16 @@ RSpec.describe Order, type: :model do
       end
 
       context '商品を購入できない場合' do
+        it 'ユーザidが空では商品を購入できない' do
+          @order.user_id = nil
+          @order.valid?
+        end
+        
+        it '商品idが空では購入できない' do
+          @order.product_id = nil
+          @order.valid?
+        end
+
         it 'クレジットカード情報が空では購入ができない' do
           @order.token = nil
           @order.valid?
@@ -43,7 +55,7 @@ RSpec.describe Order, type: :model do
         end
 
         it '都道府県(prefecuture_id)が1だと購入できない' do
-          @order.prefecture_id = '1'
+          @order.prefecture_id = 1
           @order.valid?
           expect(@order.errors.full_messages).to include('Prefecture must be other than 1')
         end
@@ -62,6 +74,12 @@ RSpec.describe Order, type: :model do
 
         it '電話番号が11桁以内でなければ購入できない' do
           @order.phone_number = "080123456789"
+          @order.valid?
+          expect(@order.errors.full_messages).to include("Phone number is invalid")
+        end
+
+        it '電話番号にハイフンが使用されている場合購入できない' do
+          @order.phone_number = "080-1234-5678"
           @order.valid?
           expect(@order.errors.full_messages).to include("Phone number is invalid")
         end
