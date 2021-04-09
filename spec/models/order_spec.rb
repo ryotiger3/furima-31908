@@ -27,13 +27,13 @@ RSpec.describe Order, type: :model do
         it '郵便番号が空では購入ができない' do
           @order.post_code = ""
           @order.valid?
-          expect(@order.errors.messages).to include({:post_code => ["can't be blank", "is invalid. Include hyphen(-)"]})
+          expect(@order.errors.messages).to include({:post_code => ["can't be blank", "is invalid", "is the wrong length (should be 8 characters)"]})
         end
 
         it '郵便番号にハイフンがないと登録できない' do
           @order.post_code = "12345678"
           @order.valid?
-          expect(@order.errors.full_messages).to include("Post code is invalid. Include hyphen(-)")
+          expect(@order.errors.full_messages).to include("Post code is invalid")
         end
 
         it '郵便番号が8桁でないと購入できない' do
@@ -63,7 +63,7 @@ RSpec.describe Order, type: :model do
         it '電話番号が11桁以内でなければ購入できない' do
           @order.phone_number = "080123456789"
           @order.valid?
-          expect(@order.errors.full_messages).to include("Phone number is invalid. is too long (maximum is 11 characters)")
+          expect(@order.errors.full_messages).to include("Phone number is invalid")
         end
      end
    end
