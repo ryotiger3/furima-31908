@@ -2,8 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
     before do
-      @user = FactoryBot.build(:user)
+      @user = FactoryBot.create(:user)
       @product = FactoryBot.build(:product)
+      @product.image = fixture_file_upload('app/assets/images/item-sample.png')
+      @product.save
+      sleep(0.1)
       @order = FactoryBot.build(:order, user_id: @user.id, product_id: @product.id)
     end
 
@@ -24,7 +27,7 @@ RSpec.describe Order, type: :model do
           @order.user_id = nil
           @order.valid?
         end
-        
+
         it '商品idが空では購入できない' do
           @order.product_id = nil
           @order.valid?

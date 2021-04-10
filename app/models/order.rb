@@ -4,6 +4,8 @@ class Order
 
   with_options presence: true do
     validates :token
+    validates :user_id
+    validates :product_id
     validates :city
     validates :address
     validates :post_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/}, length: { is: 8 }
