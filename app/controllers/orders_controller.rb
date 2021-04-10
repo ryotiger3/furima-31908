@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   before_action :set_product, only: [:index, :create]
 
   def index
-    if current_user.id != @product.user_id && @product.purchase_history == nil
+    if current_user.id != @product.user_id || @product.purchase_history == nil
       @order = Order.new
     else
       redirect_to root_path
@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
     if @order.valid?
       pay_product
       @order.save
-      redirect_to template: "produsts/index"
+      redirect_to root_path
     else
       render template: "orders/index"
     end
