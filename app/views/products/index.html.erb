@@ -125,9 +125,9 @@
     <h2 class='title'>ピックアップカテゴリー</h2>
     <%= link_to '新規投稿商品', "#", class: "subtitle" %>
     <ul class='item-lists'>
-      <li class='list'>
       <% if @products.exists? %>
       <% @products.each do |product| %>
+      <li class='list'>
         <%= link_to product_path(product.id) do %>
         <div class='item-img-content'>
           <%= image_tag product.image, class: "item-img"%>
@@ -169,8 +169,8 @@
             </div>
           </div>
          <% end %>
+               </li>
         <% end %>
-      </li>
     </ul>
   </div>
   <%# /商品一覧 %>
