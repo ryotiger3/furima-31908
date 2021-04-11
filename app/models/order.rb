@@ -10,7 +10,7 @@ class Order
     validates :address
     validates :post_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/}, length: { is: 8 }
     validates :prefecture_id, numericality: { other_than: 1 }
-    validates :phone_number, format:  { with: /\A\d{11}\z/ }
+    validates :phone_number, format:  { with: /\A\d{10,11}\z/ }
   end
 
 
