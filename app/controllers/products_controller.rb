@@ -51,7 +51,7 @@ class ProductsController < ApplicationController
     end
 
     def ensure_current_user
-      if @product.user_id != current_user.id
+      if @product.user_id == current_user.id
         redirect_to action: :index
       end
     end
