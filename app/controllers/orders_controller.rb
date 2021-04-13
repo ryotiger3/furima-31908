@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_product, only: [:index, :create]
-  before_action :ensure_current_user
+  before_action :purchase_history
 
   def index
     if current_user.id != @product.user_id || @product.purchase_history == nil
@@ -32,8 +32,8 @@ class OrdersController < ApplicationController
     params.require(:order).permit(:post_code, :prefecture_id, :city, :address, :building_name, :phone_number).merge(token: params[:token], product_id: params[:product_id], user_id: current_user.id)
   end
 
-  def ensure_current_user
-    if @product.user_id != current_user.id || @product.purchase_history.presence
+  def purchase_history
+    if @product.purchase_history.presence
        redirect_to root_path
     end
   end
