@@ -33,8 +33,8 @@ class OrdersController < ApplicationController
   end
 
   def ensure_current_user
-    if @product.user_id == current_user.id
-      redirect_to root_path
+    if @product.user_id != current_user.id || @product.purchase_history.presence
+       redirect_to root_path
     end
   end
 
