@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
   end
 
   def purchase_history
-    if @product.purchase_history.presence
+    if current_user.id == @product.user_id || @product.purchase_history.presence
        redirect_to root_path
     end
   end
